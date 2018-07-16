@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">instapay</string>
+    <string name="log_in">Log in</string>
+    <string name="email">Email</string>
+    <string name="signUp">Sign Up</string>
+    <string name="signIn">Sign In</string>
+    <string name="password">Password</string>
+    <string name="dontHaveAcc">Don\'t have account? Sign Up</string>
+</resources>

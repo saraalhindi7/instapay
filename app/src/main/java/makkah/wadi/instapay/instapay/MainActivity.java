@@ -1,27 +1,32 @@
 package makkah.wadi.instapay.instapay;
 
-import android.net.Uri;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.SparseArray;
+import android.widget.Toast;
+
+import com.google.android.gms.vision.barcode.Barcode;
+
+import java.util.List;
+
+import info.androidhive.barcode.BarcodeReader;
 
 public class MainActivity extends AppCompatActivity  {
-    private ViewPager viewPager;
-    private  SlideAdapter myAdapter;
     FragmentPagerAdapter adapterViewPager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ViewPager vpPager = (ViewPager) findViewById(R.id.viewpager);
-        adapterViewPager = new SlideAdapter(getSupportFragmentManager());
-        vpPager.setAdapter(adapterViewPager);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        adapterViewPager = new FragmentAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapterViewPager);
 
-        vpPager.setCurrentItem(1);
+        viewPager.setCurrentItem(1);
+
+
     }
-
-
 }

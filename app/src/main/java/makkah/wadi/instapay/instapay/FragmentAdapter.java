@@ -14,11 +14,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class SlideAdapter extends FragmentPagerAdapter {
+public class FragmentAdapter extends FragmentPagerAdapter {
 
     private static int NUM_ITEMS = 3;
 
-    public SlideAdapter(FragmentManager fragmentManager) {
+    public FragmentAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
     }
 
@@ -35,14 +35,14 @@ public class SlideAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int i) {
         switch (i) {
             case 0:
-                Fragment2 fragment2 = new Fragment2();
-                return fragment2;
+                ProfileFragment profileFragment = new ProfileFragment();
+                return profileFragment;
             case 1:
                 ScannerActivity QR_Scanner = new ScannerActivity();
                 return QR_Scanner;
             case 2:
-                Fragment3 fragment3 = new Fragment3();
-                return fragment3;
+                FrindsFragment frindsFragment = new FrindsFragment();
+                return frindsFragment;
             default:
                 return null;
         }

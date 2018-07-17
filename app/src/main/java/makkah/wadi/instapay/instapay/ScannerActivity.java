@@ -1,47 +1,29 @@
 package makkah.wadi.instapay.instapay;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+import com.google.android.gms.vision.barcode.Barcode;
+import java.util.List;
+import info.androidhive.barcode.BarcodeReader;
 
+public class ScannerActivity extends Fragment implements BarcodeReader.BarcodeReaderListener {
+    private static final String TAG = ScannerActivity.class.getSimpleName();
+    private BarcodeReader barcodeReader;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ScannerActivity.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ScannerActivity#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class ScannerActivity extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-
 
     public ScannerActivity() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ScannerActivity.
-     */
-    // TODO: Rename and change types and number of parameters
     public static ScannerActivity newInstance(String param1, String param2) {
         ScannerActivity fragment = new ScannerActivity();
         Bundle args = new Bundle();
@@ -55,23 +37,21 @@ public class ScannerActivity extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
-    @Override
+   /* @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_scanner, container, false);
-    }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+       View view = inflater.inflate(R.layout.fragment_scanner, container, false);
 
-    }
+        barcodeReader = (BarcodeReader) getChildFragmentManager().findFragmentById(R.id.barcode_fragment);
+        barcodeReader.setListener(this);
 
+        return view;
+    }*/
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -83,18 +63,48 @@ public class ScannerActivity extends Fragment {
         super.onDetach();
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    @Override
+    public void onScanned(final Barcode barcode) {
+       /* Log.e(TAG, "onScanned: " + barcode.displayValue);
+        barcodeReader.playBeep();
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getActivity(), "Barcode: " + barcode.displayValue, Toast.LENGTH_SHORT).show();
+            }
+        });*/
+    }
+
+    @Override
+    public void onScannedMultiple(List<Barcode> barcodes) {
+        /*Log.e(TAG, "onScannedMultiple: " + barcodes.size());
+        String codes = "";
+        for (Barcode barcode : barcodes) {
+            codes += barcode.displayValue + ", ";
+        }
+
+        final String finalCodes = codes;
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getActivity(), "Barcodes: " + finalCodes, Toast.LENGTH_SHORT).show();
+            }
+        });*/
+    }
+
+    @Override
+    public void onBitmapScanned(SparseArray<Barcode> sparseArray) {
+
+    }
+
+    @Override
+    public void onScanError(String errorMessage) {
+       // Log.e(TAG, "onScanError: " + errorMessage);
+    }
+
+    @Override
+    public void onCameraPermissionDenied() {
+        //Toast.makeText(getActivity(), "Camera permission denied!", Toast.LENGTH_LONG).show();
     }
 }

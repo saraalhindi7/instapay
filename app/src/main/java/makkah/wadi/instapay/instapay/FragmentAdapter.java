@@ -38,8 +38,8 @@ public class FragmentAdapter extends FragmentPagerAdapter {
                 ProfileFragment profileFragment = new ProfileFragment();
                 return profileFragment;
             case 1:
-                ScannerActivity QR_Scanner = new ScannerActivity();
-                return QR_Scanner;
+                BarcodeFragment barcodeFragment = new BarcodeFragment();
+                return  barcodeFragment;
             case 2:
                 FrindsFragment frindsFragment = new FrindsFragment();
                 return frindsFragment;

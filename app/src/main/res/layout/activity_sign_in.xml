@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/maincolor"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/userimg"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="20dp"
+        />
+    <EditText
+        android:id="@+id/Adress_email"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:hint="Email"
+        android:textColor="@color/mainColor"
+        android:textColorHint= "@color/hintcolor"
+        android:inputType="textPersonName"
+
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/hintcolor"/>
+
+
+    <EditText
+        android:id="@+id/EPassword"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="Password"
+        android:textSize="16sp"
+        android:textColor="@color/mainColor"
+        android:textColorHint= "@color/hintcolor"
+        android:inputType="textEmailAddress"
+        android:backgroundTint="@color/hintcolor"
+        />
+
+    <TextView
+        android:id="@+id/resetPass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Forget Your Password ?"
+        android:layout_gravity="center"
+        android:textSize="10sp"
+        android:textColor= "@color/hintcolor"
+        />
+
+    <Button
+        android:id="@+id/SignInButton"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="55dp"
+        android:layout_gravity="center"
+        android:text="Sign In"
+        android:textColor="@color/hintcolor"
+        android:background="@drawable/buttonstyle1"/>
+</LinearLayout>

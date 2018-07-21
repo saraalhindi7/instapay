@@ -5,4 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="mainColor">#3D244F</color>
     <color name="white">#ffff</color>
-</resources>
+        <color name="maincolor">#3D344F</color>
+        <color name="hintcolor">#FFFFFF</color>
+    <color name="devidor">#B3B3B3</color>
+    </resources>

@@ -3,12 +3,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FrindsFragment">
+    tools:context=".FrindsFragment"
+    >
 
-    <!-- TODO: Update blank fragment layout -->
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello Friends ! " />
+        android:layout_height="wrap_content"
+        android:text="Favourit Friends"
+        android:background="@color/white"
+        android:textColor="@color/mainColor"
+        android:textSize="20dp"
+        android:padding="10dp"/>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/FavoritFriendsRecyclerWive">
+    </android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Friends"
+        android:background="@color/white"
+        android:textColor="@color/mainColor"
+        android:textSize="20dp"
+        android:padding="10dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/friendsRecyclerWive2">
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>
+
+
 
 </FrameLayout>

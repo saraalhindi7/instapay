@@ -1,6 +1,7 @@
 package makkah.wadi.instapay.instapay;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,8 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.vision.barcode.Barcode;
@@ -21,6 +24,7 @@ import info.androidhive.barcode.BarcodeReader;
 public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeReaderListener{
     private static final String TAG = BarcodeFragment.class.getSimpleName();
     private BarcodeReader barcodeReader;
+    Button profile;
     public BarcodeFragment() {
         // Required empty public constructor
     }
@@ -29,6 +33,7 @@ public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeRe
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
         }
+
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

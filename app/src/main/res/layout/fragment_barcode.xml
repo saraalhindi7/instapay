@@ -26,36 +26,37 @@
         app:square_height="200"
         app:square_width="200" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/profile_icon"
+    <Button
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/profile_icon"
+        android:id="@+id/profile_imageView"
         android:layout_margin="10dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"/>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/friends_icon"
+    <Button
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/friends_icon"
         android:layout_margin="10dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"/>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <Button
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/gallary_icon"
+        android:background="@drawable/gallary_icon"
         android:layout_margin="10dp"
         android:id="@+id/gallary_imageView"/>
 
-    <ImageView
+    <Button
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_above="@+id/gallary_imageView"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/capture_icon" />
+        android:background="@drawable/capture_icon" />
 
 
 

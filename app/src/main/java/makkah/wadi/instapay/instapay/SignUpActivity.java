@@ -2,6 +2,7 @@ package makkah.wadi.instapay.instapay;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +22,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
@@ -27,9 +34,10 @@ public class SignUpActivity extends AppCompatActivity {
 
     public int balance = 50 ;
     public String name, email, phone, password;
-    EditText userName, userEmail, userPhone, userPassword;
+    public EditText userName, userEmail, userPhone, userPassword;
     Button signUpUserBtn;
     TextView haveAccount;
+
     private FirebaseAuth auth;
 
     @Override
@@ -61,7 +69,6 @@ public class SignUpActivity extends AppCompatActivity {
 
                 name = userName.getText().toString();
                 phone = userPhone.getText().toString();
-
 
                 //checking user inputs, if it is empty or not and return response
                 if (TextUtils.isEmpty(email)) {

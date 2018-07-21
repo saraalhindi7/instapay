@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.util.SparseArray;
@@ -20,17 +21,21 @@ import java.util.List;
 
 import info.androidhive.barcode.BarcodeReader;
 
+import static android.app.Activity.RESULT_OK;
+
 
 public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeReaderListener{
     private static final String TAG = BarcodeFragment.class.getSimpleName();
     private BarcodeReader barcodeReader;
     Button profile;
+    ImageView imageView;
     public BarcodeFragment() {
         // Required empty public constructor
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        imageView = (ImageView) imageView.findViewById(R.id.imageFromGallary);
         if (getArguments() != null) {
         }
 
@@ -93,5 +98,18 @@ public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeRe
     @Override
     public void onCameraPermissionDenied() {
         Toast.makeText(getActivity(), "Camera permission denied!", Toast.LENGTH_LONG).show();
+    }
+    public void pick_picture (View view){
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(intent,100);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==100 && resultCode == RESULT_OK){
+            Uri uri = data.getData();
+            imageView.setImageURI(uri);
+        }
     }
 }

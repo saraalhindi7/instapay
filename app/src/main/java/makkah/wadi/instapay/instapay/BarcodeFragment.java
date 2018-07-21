@@ -1,6 +1,5 @@
 package makkah.wadi.instapay.instapay;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.vision.barcode.Barcode;
+import com.google.zxing.BarcodeFormat;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.util.List;
 
@@ -27,7 +28,7 @@ import static android.app.Activity.RESULT_OK;
 public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeReaderListener{
     private static final String TAG = BarcodeFragment.class.getSimpleName();
     private BarcodeReader barcodeReader;
-    Button profile;
+    Button gallery;
     ImageView imageView;
     public BarcodeFragment() {
         // Required empty public constructor
@@ -36,9 +37,18 @@ public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeRe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         imageView = (ImageView) imageView.findViewById(R.id.imageFromGallary);
+        gallery = (Button) gallery.findViewById(R.id.gallary_btn);
         if (getArguments() != null) {
         }
+       gallery.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
 
+               Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+               startActivityForResult(intent,100);
+
+           }
+       });
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -99,11 +109,6 @@ public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeRe
     public void onCameraPermissionDenied() {
         Toast.makeText(getActivity(), "Camera permission denied!", Toast.LENGTH_LONG).show();
     }
-    public void pick_picture (View view){
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-        startActivityForResult(intent,100);
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -113,3 +118,4 @@ public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeRe
         }
     }
 }
+

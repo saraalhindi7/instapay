@@ -4,43 +4,117 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FrindsFragment"
-    >
+    android:background="@color/white">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="10dp"
+            android:text="Favourit Friends"
+            android:textColor="@color/mainColor"
+            android:textSize="25dp"
+            android:textStyle="bold"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="5dp">
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/qr_code_icon"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="sara Mohammad"
+            android:textColor="@color/mainColor"
+            android:textSize="20sp"
+            android:layout_margin="10dp"/>
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="5dp">
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/qr_code_icon"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Asma Albasha"
+                android:textColor="@color/mainColor"
+                android:textSize="20sp"
+                android:layout_margin="10dp"/>
+        </LinearLayout>
+
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Favourit Friends"
         android:background="@color/white"
-        android:textColor="@color/mainColor"
-        android:textSize="20dp"
-        android:padding="10dp"/>
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/FavoritFriendsRecyclerWive">
-    </android.support.v7.widget.RecyclerView>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:padding="10dp"
         android:text="Friends"
-        android:background="@color/white"
         android:textColor="@color/mainColor"
-        android:textSize="20dp"
-        android:padding="10dp"/>
+        android:textSize="25dp"
+        android:textStyle="bold" />
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/friendsRecyclerWive2">
-    </android.support.v7.widget.RecyclerView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="5dp">
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/qr_code_icon"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Salman Abudllah"
+                android:textColor="@color/mainColor"
+                android:textSize="20sp"
+                android:layout_margin="10dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="5dp">
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/qr_code_icon"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Ahmad Alharbi"
+                android:textColor="@color/mainColor"
+                android:textSize="20sp"
+                android:layout_margin="10dp"/>
+        </LinearLayout>
 
-</LinearLayout>
+    </LinearLayout>
+        <!--<android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/FavoritFriendsRecyclerWive">-->
 
 
+        <!--</android.support.v7.widget.RecyclerView>-->
+
+
+        <!--<android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/friendsRecyclerWive2">
+        </android.support.v7.widget.RecyclerView>-->
 
 </FrameLayout>

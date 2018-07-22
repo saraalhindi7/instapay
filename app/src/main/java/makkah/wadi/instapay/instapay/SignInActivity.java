@@ -21,11 +21,13 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
+
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
 public class SignInActivity extends AppCompatActivity {
+
 
     EditText inputEmail;
     EditText inputPassword;
@@ -37,9 +39,6 @@ public class SignInActivity extends AppCompatActivity {
     ImageView QR_Profile;
     TextView userNameProfile;
     TextView balancProfile;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +109,7 @@ public class SignInActivity extends AppCompatActivity {
                                     }
                                 } else {
                                     //genera code
-                                    MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+                                    /*MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
                                     try{
                                         BitMatrix bitMatrix = multiFormatWriter.encode("text2Qr" , BarcodeFormat.QR_CODE,200,200);
                                         BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
@@ -119,7 +118,7 @@ public class SignInActivity extends AppCompatActivity {
                                     }
                                     catch (WriterException e){
                                         e.printStackTrace();
-                                    }
+                                    }*/
 
                                     Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                                     startActivity(intent);

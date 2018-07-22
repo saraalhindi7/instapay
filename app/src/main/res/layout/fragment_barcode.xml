@@ -34,7 +34,7 @@
     <Button
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:background="@drawable/profile_icon"
+        android:background="@drawable/profile_icon_m"
         android:id="@+id/profile_imageView"
         android:layout_margin="10dp"
         android:layout_alignParentBottom="true"

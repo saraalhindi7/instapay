@@ -15,8 +15,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.vision.barcode.Barcode;
-import com.google.zxing.BarcodeFormat;
-import com.journeyapps.barcodescanner.BarcodeEncoder;
+
 
 import java.util.List;
 
@@ -27,28 +26,37 @@ import static android.app.Activity.RESULT_OK;
 
 public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeReaderListener{
     private static final String TAG = BarcodeFragment.class.getSimpleName();
+
+
     private BarcodeReader barcodeReader;
     Button gallery;
+    Button profile;
     ImageView imageView;
+
     public BarcodeFragment() {
         // Required empty public constructor
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        imageView = (ImageView) imageView.findViewById(R.id.imageFromGallary);
-        gallery = (Button) gallery.findViewById(R.id.gallary_btn);
         if (getArguments() != null) {
+            gallery.findViewById(R.id.gallary_btn).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+                    startActivityForResult(intent,100);
+                }
+            });
+            profile.findViewById(R.id.profile_imageView).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ProfileFragment profileFragment = new ProfileFragment();
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.barcode_fragment , profileFragment,"findThisFragment")
+                            .addToBackStack(null).commit();
+                }
+            });
         }
-       gallery.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-
-               Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-               startActivityForResult(intent,100);
-
-           }
-       });
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -109,13 +117,13 @@ public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeRe
     public void onCameraPermissionDenied() {
         Toast.makeText(getActivity(), "Camera permission denied!", Toast.LENGTH_LONG).show();
     }
-    @Override
+   /* @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==100 && resultCode == RESULT_OK){
             Uri uri = data.getData();
             imageView.setImageURI(uri);
         }
-    }
+    }*/
 }
 

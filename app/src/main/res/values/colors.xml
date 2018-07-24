@@ -7,5 +7,6 @@
     <color name="white">#ffff</color>
         <color name="maincolor">#3D344F</color>
         <color name="hintcolor">#FFFFFF</color>
+    <color name="assest">#F4F4F4</color>
     <color name="devidor">#B3B3B3</color>
     </resources>

@@ -98,8 +98,8 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
-                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(auth.getUid());
-                        FirebaseUser user = auth.getCurrentUser();
+                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("user").child(auth.getUid());
+
                         reference.child("name").setValue(name);
                         reference.child("phone_number").setValue(phone);
                         reference.child("Balance").setValue(balance);

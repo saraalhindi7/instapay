@@ -35,6 +35,7 @@ public class StartActivity extends AppCompatActivity {
             }
         });
         auth = FirebaseAuth.getInstance();
+
         //Firebase auththentication instance
         if (auth.getCurrentUser() != null) {
             startActivity(new Intent(StartActivity.this, MainActivity.class));

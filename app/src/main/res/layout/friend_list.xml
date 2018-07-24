@@ -38,7 +38,7 @@ android:background="@color/hintcolor"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_toLeftOf="@id/QR_code"
-                
+
                 android:text="friend name"
 
                 android:textColor="@color/maincolor"

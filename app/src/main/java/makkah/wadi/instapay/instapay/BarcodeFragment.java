@@ -86,14 +86,18 @@ public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeRe
             public void run() {
                 Toast.makeText(getActivity(), "Barcode: " + barcode.displayValue, Toast.LENGTH_SHORT).show();
                 if(!isEmpty(barcode.displayValue)){
-                    makkah.wadi.instapay.instapay.Dialog dialog = makkah.wadi.instapay.instapay.Dialog.newInstance();
-                    dialog.show(getFragmentManager(),"dialog");
+                   // makkah.wadi.instapay.instapay.Dialog dialog = makkah.wadi.instapay.instapay.Dialog.newInstance();
+                  //  dialog.show(getFragmentManager(),"dialog");
+
+                    String userKey = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference myRef = database.getReference("user").child( userKey);
+                    String ID = barcode.displayValue;
+                    myRef.child("friends").setValue(ID);
                 }
             }
         });
     }
-
-
     @Override
     public void onScannedMultiple(List<Barcode> barcodes) {
         Log.e(TAG, "onScannedMultiple: " + barcodes.size());

@@ -31,7 +31,7 @@ import static android.app.Activity.RESULT_OK;
 import static android.text.TextUtils.isEmpty;
 
 
-public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeReaderListener{
+public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeReaderListener {
     private static final String TAG = BarcodeFragment.class.getSimpleName();
 
 
@@ -76,6 +76,7 @@ public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeRe
         return view;
     }
 
+
     @Override
     public void onScanned(final Barcode barcode) {
         Log.e(TAG, "onScanned: " + barcode.displayValue);
@@ -88,6 +89,7 @@ public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeRe
                 if(!isEmpty(barcode.displayValue)){
                     makkah.wadi.instapay.instapay.Dialog dialog = makkah.wadi.instapay.instapay.Dialog.newInstance();
                     dialog.show(getFragmentManager(),"dialog");
+
                 }
             }
         });

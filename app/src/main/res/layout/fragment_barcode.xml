@@ -47,20 +47,4 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"/>
 
-    <Button
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/gallary_icon"
-        android:layout_margin="10dp"
-        android:id="@+id/gallary_btn"/>
-
-    <Button
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_above="@+id/gallary_btn"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/capture_icon" />
-
 </RelativeLayout>

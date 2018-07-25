@@ -19,8 +19,7 @@
     <info.androidhive.barcode.ScannerOverlay
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#44000000"
-        app:line_color="#7323DC"
+        app:line_color="#2b0360"
         app:line_speed="6"
         app:line_width="4"
         app:square_height="200"
@@ -38,7 +37,8 @@
         android:id="@+id/profile_imageView"
         android:layout_margin="10dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"/>
+        android:layout_alignParentLeft="true"
+       />
     <Button
         android:layout_width="30dp"
         android:layout_height="30dp"
@@ -62,7 +62,5 @@
         android:layout_above="@+id/gallary_btn"
         android:layout_centerHorizontal="true"
         android:background="@drawable/capture_icon" />
-
-
 
 </RelativeLayout>

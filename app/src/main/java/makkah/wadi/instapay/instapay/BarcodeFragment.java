@@ -1,5 +1,6 @@
 package makkah.wadi.instapay.instapay;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import java.util.List;
 import info.androidhive.barcode.BarcodeReader;
 
 import static android.app.Activity.RESULT_OK;
+import static android.text.TextUtils.isEmpty;
 
 
 public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeReaderListener{
@@ -29,9 +31,8 @@ public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeRe
 
 
     private BarcodeReader barcodeReader;
-    Button gallery;
-    Button profile;
-    ImageView imageView;
+
+
 
     public BarcodeFragment() {
         // Required empty public constructor
@@ -39,25 +40,8 @@ public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeRe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            gallery.findViewById(R.id.gallary_btn).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-                    startActivityForResult(intent,100);
-                }
-            });
-            profile.findViewById(R.id.profile_imageView).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ProfileFragment profileFragment = new ProfileFragment();
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.barcode_fragment , profileFragment,"findThisFragment")
-                            .addToBackStack(null).commit();
-                }
-            });
-        }
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -66,7 +50,24 @@ public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeRe
 
         barcodeReader = (BarcodeReader) getChildFragmentManager().findFragmentById(R.id.barcode_fragment);
         barcodeReader.setListener(this);
-
+        Button profile = (Button) view.findViewById(R.id.profile_imageView);
+        //Button gallery = (Button) view.findViewById(R.id.imageFromGallary);
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ProfileFragment profileFragment = new ProfileFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.barcode_fragment , profileFragment,"findThisFragment")
+                        .addToBackStack(null).commit();
+            }
+        });
+        /*gallery.findViewById(R.id.gallary_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+                startActivityForResult(intent,100);
+            }
+        });*/
         return view;
     }
 
@@ -79,10 +80,14 @@ public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeRe
             @Override
             public void run() {
                 Toast.makeText(getActivity(), "Barcode: " + barcode.displayValue, Toast.LENGTH_SHORT).show();
+                if(!isEmpty(barcode.displayValue)){
+                    makkah.wadi.instapay.instapay.Dialog dialog = makkah.wadi.instapay.instapay.Dialog.newInstance();
+                    dialog.show(getFragmentManager(),"dialog");
+                }
             }
         });
-
     }
+
 
     @Override
     public void onScannedMultiple(List<Barcode> barcodes) {
@@ -98,10 +103,10 @@ public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeRe
             @Override
             public void run() {
                 Toast.makeText(getActivity(), "Barcodes: " + finalCodes, Toast.LENGTH_SHORT).show();
+
             }
         });
     }
-
     @Override
     public void onBitmapScanned(SparseArray<Barcode> sparseArray) {
 
@@ -122,8 +127,9 @@ public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeRe
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==100 && resultCode == RESULT_OK){
             Uri uri = data.getData();
-            imageView.setImageURI(uri);
+            //imageView.setImageURI(uri);
         }
     }*/
+
 }
 

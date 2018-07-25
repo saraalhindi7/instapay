@@ -98,21 +98,22 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
-                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("user").child(auth.getUid());
-
-                        reference.child("name").setValue(name);
-                        reference.child("phone_number").setValue(phone);
-                        reference.child("Balance").setValue(balance);
-
-
-                        Toast.makeText(SignUpActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), LENGTH_SHORT).show();
-                        if (!task.isSuccessful()) {
+                           if (!task.isSuccessful()) {
                             Toast.makeText(SignUpActivity.this, "Authentication failed." + task.getException(),
 
                                     LENGTH_SHORT).show();
                             Log.e("the error", String.valueOf(task.getException()));
                         } else {
-                            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                               DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("user").child(auth.getUid());
+
+                               reference.child("name").setValue(name);
+                               reference.child("phone_number").setValue(phone);
+                               reference.child("Balance").setValue(balance);
+
+
+                               Toast.makeText(SignUpActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), LENGTH_SHORT).show();
+
+                               Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                             startActivity(intent);
                             finish();
                         }

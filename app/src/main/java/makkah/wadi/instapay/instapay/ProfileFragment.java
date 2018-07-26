@@ -65,7 +65,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String name = dataSnapshot.child("user").child(auth.getUid()).child("name").getValue(String.class);
-                Double balance1 = dataSnapshot.child("user").child(auth.getUid()).child("Balance").getValue(Double.class);;
+                Double balance1 = dataSnapshot.child("user").child(auth.getUid()).child("Balance").getValue(Double.class);
              //
                 Log.e("name", name);
                 Log.e("id", auth.getUid());

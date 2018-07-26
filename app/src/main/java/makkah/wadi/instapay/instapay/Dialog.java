@@ -8,8 +8,16 @@ import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Dialog extends AppCompatDialogFragment {
+    DatabaseReference databaseUser;
+    FirebaseAuth auth;
+
     Context context;
     private EditText AmountEditText;
     public Dialog (){
@@ -28,18 +36,34 @@ public class Dialog extends AppCompatDialogFragment {
 
                     }
                 }).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+               String amount = AmountEditText.getText().toString();
+                auth = FirebaseAuth.getInstance();
+                Double a = Double.valueOf(amount);
+
+                DatabaseReference databaseUser = FirebaseDatabase.getInstance().getReference();
+
+                databaseUser.child("user").child(auth.getUid()).child("Balance").setValue(a);
+
 
             }
         });
         AmountEditText = view.findViewById(R.id.amount);
         return builder.create();
     }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+
+    }
+
     public static  Dialog newInstance() {
         Dialog d = new Dialog();
         return d;
     }
-
 
 }

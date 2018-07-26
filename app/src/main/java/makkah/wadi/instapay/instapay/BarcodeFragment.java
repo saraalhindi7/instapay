@@ -33,7 +33,7 @@ import static android.app.Activity.RESULT_OK;
 import static android.text.TextUtils.isEmpty;
 
 
-public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeReaderListener{
+public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeReaderListener {
     private static final String TAG = BarcodeFragment.class.getSimpleName();
 
 
@@ -78,6 +78,7 @@ public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeRe
         return view;
     }
 
+
     @Override
     public void onScanned(final Barcode barcode) {
         Log.e(TAG, "onScanned: " + barcode.displayValue);
@@ -91,14 +92,17 @@ public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeRe
                     makkah.wadi.instapay.instapay.Dialog dialog = makkah.wadi.instapay.instapay.Dialog.newInstance();
                     dialog.show(getFragmentManager(),"dialog");
 
+
                     final String userKey = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                     DatabaseReference myRef = database.getReference("user").child( userKey);
                     String ID = barcode.displayValue;
+
                     myRef.child(ID);
                     ID=myRef.push().getKey();
                     DatabaseReference friendID= myRef.child("friends").child(ID);
                     friendID.setValue(ID);
+
 
 
                 }

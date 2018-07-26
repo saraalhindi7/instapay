@@ -77,23 +77,25 @@ public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeRe
             @Override
             public void run() {
                 Toast.makeText(getActivity(), "Barcode: " + barcode.displayValue, Toast.LENGTH_SHORT).show();
-                String flag = "user";
+                String flag = "friend";
                 if (!isEmpty(barcode.displayValue)) {
                     makkah.wadi.instapay.instapay.Dialog dialog = makkah.wadi.instapay.instapay.Dialog.newInstance();
                     dialog.show(getFragmentManager(), "dialog");
-                    if (flag.equalsIgnoreCase("friend")) {
+                   if (flag.equalsIgnoreCase("friend")) {
                         //Asmaa code ---------------------
                         final String userKey = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
                         DatabaseReference myRef = database.getReference().child("user").child(userKey);
-
                         String ID = barcode.displayValue;
 
                         DatabaseReference friendID = myRef.child("friends").child(ID);
-                        myRef.child(ID);
                         friendID.setValue(ID);
+                        myRef.child(ID);
+
 
                     }
+
+
 
                 }
             }

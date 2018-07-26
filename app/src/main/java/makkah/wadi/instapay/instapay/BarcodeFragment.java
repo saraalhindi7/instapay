@@ -1,10 +1,6 @@
 package makkah.wadi.instapay.instapay;
 
-import android.app.Dialog;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.util.SparseArray;
@@ -12,24 +8,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
-import com.google.firebase.database.ValueEventListener;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import info.androidhive.barcode.BarcodeReader;
 
-import static android.app.Activity.RESULT_OK;
 import static android.text.TextUtils.isEmpty;
 
 
@@ -40,10 +30,10 @@ public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeRe
     private BarcodeReader barcodeReader;
 
 
-
     public BarcodeFragment() {
         // Required empty public constructor
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,22 +47,21 @@ public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeRe
 
         barcodeReader = (BarcodeReader) getChildFragmentManager().findFragmentById(R.id.barcode_fragment);
         barcodeReader.setListener(this);
-        Button profile = (Button) view.findViewById(R.id.profile_imageView);
-        //Button gallery = (Button) view.findViewById(R.id.imageFromGallary);
+        Button profile = (Button) view.findViewById(R.id.profile_btn);
+
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ProfileFragment profileFragment = new ProfileFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.barcode_fragment , profileFragment,"findThisFragment")
+                        .replace(R.id.barcode_fragment, profileFragment, "findThisFragment")
                         .addToBackStack(null).commit();
             }
         });
         /*gallery.findViewById(R.id.gallary_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-                startActivityForResult(intent,100);
+
             }
         });*/
         return view;
@@ -88,27 +77,29 @@ public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeRe
             @Override
             public void run() {
                 Toast.makeText(getActivity(), "Barcode: " + barcode.displayValue, Toast.LENGTH_SHORT).show();
-                if(!isEmpty(barcode.displayValue)){
+                String flag = "user";
+                if (!isEmpty(barcode.displayValue)) {
                     makkah.wadi.instapay.instapay.Dialog dialog = makkah.wadi.instapay.instapay.Dialog.newInstance();
-                    dialog.show(getFragmentManager(),"dialog");
+                    dialog.show(getFragmentManager(), "dialog");
+                    if (flag.equalsIgnoreCase("friend")) {
+                        //Asmaa code ---------------------
+                        final String userKey = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        DatabaseReference myRef = database.getReference().child("user").child(userKey);
 
+                        String ID = barcode.displayValue;
 
-                    final String userKey = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference myRef = database.getReference("user").child( userKey);
-                    String ID = barcode.displayValue;
+                        DatabaseReference friendID = myRef.child("friends").child(ID);
+                        myRef.child(ID);
+                        friendID.setValue(ID);
 
-                    myRef.child(ID);
-                    ID=myRef.push().getKey();
-                    DatabaseReference friendID= myRef.child("friends").child(ID);
-                    friendID.setValue(ID);
-
-
+                    }
 
                 }
             }
         });
     }
+
     @Override
     public void onScannedMultiple(List<Barcode> barcodes) {
         Log.e(TAG, "onScannedMultiple: " + barcodes.size());
@@ -127,6 +118,7 @@ public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeRe
             }
         });
     }
+
     @Override
     public void onBitmapScanned(SparseArray<Barcode> sparseArray) {
 

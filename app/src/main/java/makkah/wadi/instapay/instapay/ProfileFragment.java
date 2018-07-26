@@ -1,6 +1,7 @@
 package makkah.wadi.instapay.instapay;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -54,6 +55,10 @@ public class ProfileFragment extends Fragment {
         Username = (TextView) v.findViewById(R.id.userNameTextView);
         balance = (TextView) v.findViewById(R.id.balaneTextView);
         return v;
+
+
+
+
     }
     @Override
     public void onStart() {

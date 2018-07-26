@@ -25,21 +25,17 @@
         app:square_height="200"
         app:square_width="200" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageFromGallary"/>
-
     <Button
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:background="@drawable/profile_icon_m"
-        android:id="@+id/profile_imageView"
+        android:id="@+id/profile_btn"
         android:layout_margin="10dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-       />
+        android:layout_alignParentLeft="true" />
+
     <Button
+        android:id="@+id/friend_btn"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:background="@drawable/friends_icon"

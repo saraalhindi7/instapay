@@ -13,8 +13,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:hint="Enter Text Here"
-        android:gravity="center"
-        />
+        android:gravity="center" />
 
     <Button
         android:layout_width="fill_parent"

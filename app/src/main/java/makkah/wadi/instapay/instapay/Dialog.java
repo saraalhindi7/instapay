@@ -52,7 +52,7 @@ public class Dialog extends AppCompatDialogFragment {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        Double artist =   dataSnapshot.child("user").child(auth.getUid()).child("Balance").getValue(Double.class);
+                        Double artist = dataSnapshot.child("user").child(auth.getUid()).child("Balance").getValue(Double.class);
 
                         databaseUser.child("user").child(auth.getUid()).child("Balance").setValue(a+artist);
 

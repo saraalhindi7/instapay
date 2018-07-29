@@ -33,8 +33,8 @@ public class Dialog extends AppCompatDialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog , null);
 
-        builder.setView(view).setTitle("Pay")
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+        builder.setView(view).setTitle("Specify Amount").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 

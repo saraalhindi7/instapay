@@ -15,22 +15,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DatabaseReference;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
-import com.journeyapps.barcodescanner.BarcodeEncoder;
+
 
 import static android.widget.Toast.LENGTH_SHORT;
 
 public class SignUpActivity extends AppCompatActivity {
+
 
     public int balance = 50 ;
     public String name, email, phone, password;
@@ -42,6 +44,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         auth = FirebaseAuth.getInstance();
@@ -58,6 +61,7 @@ public class SignUpActivity extends AppCompatActivity {
                 startActivity( new Intent(SignUpActivity.this, SignInActivity.class));
             }
         });
+
         signUpUserBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -110,21 +114,22 @@ public class SignUpActivity extends AppCompatActivity {
                                reference.child("phone_number").setValue(phone);
                                reference.child("Balance").setValue(balance);
 
+                               FirebaseStorage storage = FirebaseStorage.getInstance();
+                               StorageReference storageRef = storage.getReferenceFromUrl("gs://fir-example-c4312.appspot.com");
 
                                Toast.makeText(SignUpActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), LENGTH_SHORT).show();
-
                                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
+                               startActivity(intent);
+                               finish();
                         }
                     }
 
                 });
 
-
             }
 
         });
-    }
 
+
+    }
 }

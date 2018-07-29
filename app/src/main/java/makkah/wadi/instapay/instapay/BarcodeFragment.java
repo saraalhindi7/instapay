@@ -1,5 +1,6 @@
 package makkah.wadi.instapay.instapay;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -8,12 +9,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
 
 
 import java.util.List;
@@ -24,8 +31,9 @@ import static android.text.TextUtils.isEmpty;
 
 
 public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeReaderListener {
-    private static final String TAG = BarcodeFragment.class.getSimpleName();
 
+
+    private static final String TAG = BarcodeFragment.class.getSimpleName();
 
     private BarcodeReader barcodeReader;
 
@@ -34,10 +42,6 @@ public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeRe
         // Required empty public constructor
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,12 +62,6 @@ public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeRe
                         .addToBackStack(null).commit();
             }
         });
-        /*gallery.findViewById(R.id.gallary_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });*/
         return view;
     }
 
@@ -88,15 +86,10 @@ public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeRe
                         DatabaseReference myRef = database.getReference().child("user").child(userKey);
                         String ID = barcode.displayValue;
 
-                        DatabaseReference friendID = myRef.child("friends").child(ID);
+                        DatabaseReference friendID = myRef.child("friend").child(ID);
                         friendID.setValue(ID);
                         myRef.child(ID);
-
-
                     }
-
-
-
                 }
             }
         });
@@ -136,14 +129,7 @@ public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeRe
     public void onCameraPermissionDenied() {
         Toast.makeText(getActivity(), "Camera permission denied!", Toast.LENGTH_LONG).show();
     }
-   /* @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==100 && resultCode == RESULT_OK){
-            Uri uri = data.getData();
-            //imageView.setImageURI(uri);
-        }
-    }*/
+
 
 }
 

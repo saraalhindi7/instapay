@@ -2,11 +2,11 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="mainColor">#3D244F</color>
+    <color name="colorAccent">#e2e1e2</color>
+    <color name="mainColor">#ededed</color>
     <color name="white">#ffff</color>
-        <color name="maincolor">#3D344F</color>
-        <color name="hintcolor">#FFFFFF</color>
+    <color name="maincolor">#3D344F</color>
+    <color name="hintcolor">#FFFFFF</color>
     <color name="assest">#F4F4F4</color>
     <color name="devidor">#6F6687</color>
     </resources>

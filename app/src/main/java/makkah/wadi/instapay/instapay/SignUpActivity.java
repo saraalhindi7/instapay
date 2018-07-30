@@ -3,6 +3,7 @@ package makkah.wadi.instapay.instapay;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DatabaseReference;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,6 +26,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -33,12 +37,17 @@ import static android.widget.Toast.LENGTH_SHORT;
 
 public class SignUpActivity extends AppCompatActivity {
 
+    public final static int QRcodeWidth = 500 ;
+    Bitmap bitmap ;
+    String userID;
+    Uri filePath;
 
     public int balance = 50 ;
     public String name, email, phone, password;
     public EditText userName, userEmail, userPhone, userPassword;
     Button signUpUserBtn;
     TextView haveAccount;
+    private StorageReference mStorageRef;
 
     private FirebaseAuth auth;
 
@@ -48,6 +57,8 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         auth = FirebaseAuth.getInstance();
+
+        mStorageRef = FirebaseStorage.getInstance().getReference();
 
         userEmail = (EditText) findViewById(R.id.email_address);
         userPassword = (EditText) findViewById(R.id.Password);
@@ -114,8 +125,30 @@ public class SignUpActivity extends AppCompatActivity {
                                reference.child("phone_number").setValue(phone);
                                reference.child("Balance").setValue(balance);
 
-                               FirebaseStorage storage = FirebaseStorage.getInstance();
-                               StorageReference storageRef = storage.getReferenceFromUrl("gs://fir-example-c4312.appspot.com");
+
+                              /* StorageReference riversRef = mStorageRef.child("images/images.jpg");
+                               riversRef.putFile(filePath ).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                   @Override
+                                   public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                       Uri downloadUrl = taskSnapshot.getDownloadUrl();
+
+                                   }
+                               }).addOnFailureListener(new OnFailureListener() {
+                                   @Override
+                                   public void onFailure(@NonNull Exception e) {
+
+                                   }
+                               });*/
+                              //need to sort .. not working
+
+                              /* userID = userEmail.getText().toString();
+
+                               try {
+                                   bitmap = TextToImageEncode(userID);
+
+                               } catch (WriterException e) {
+                                   e.printStackTrace();
+                               }*/
 
                                Toast.makeText(SignUpActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), LENGTH_SHORT).show();
                                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
@@ -123,13 +156,41 @@ public class SignUpActivity extends AppCompatActivity {
                                finish();
                         }
                     }
-
                 });
-
             }
-
         });
+    }
+    Bitmap TextToImageEncode(String Value) throws WriterException {
+        BitMatrix bitMatrix;
+        try {
+            bitMatrix = new MultiFormatWriter().encode(
+                    Value,
+                    BarcodeFormat.DATA_MATRIX.QR_CODE,
+                    QRcodeWidth, QRcodeWidth, null
+            );
 
+        } catch (IllegalArgumentException Illegalargumentexception) {
 
+            return null;
+        }
+        int bitMatrixWidth = bitMatrix.getWidth();
+
+        int bitMatrixHeight = bitMatrix.getHeight();
+
+        int[] pixels = new int[bitMatrixWidth * bitMatrixHeight];
+
+        for (int y = 0; y < bitMatrixHeight; y++) {
+            int offset = y * bitMatrixWidth;
+
+            for (int x = 0; x < bitMatrixWidth; x++) {
+
+                pixels[offset + x] = bitMatrix.get(x, y) ?
+                        getResources().getColor(R.color.colorAccent):getResources().getColor(R.color.colorPrimary);
+            }
+        }
+        Bitmap bitmap = Bitmap.createBitmap(bitMatrixWidth, bitMatrixHeight, Bitmap.Config.ARGB_4444);
+
+        bitmap.setPixels(pixels, 0, 500, 0, 0, bitMatrixWidth, bitMatrixHeight);
+        return bitmap;
     }
 }

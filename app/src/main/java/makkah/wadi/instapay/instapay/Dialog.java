@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -45,18 +44,20 @@ public class Dialog extends AppCompatDialogFragment {
             public void onClick(DialogInterface dialogInterface, int i) {
                String amount = AmountEditText.getText().toString();
                 auth = FirebaseAuth.getInstance();
-                final Double a = Double.valueOf(amount);
+                final Double addAmount = Double.valueOf(amount);
                 final DatabaseReference databaseUser = FirebaseDatabase.getInstance().getReference();
 
                 databaseUser.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        Double artist = dataSnapshot.child("user").child(auth.getUid()).child("Balance").getValue(Double.class);
+                        Double myCurrentBalance= dataSnapshot.child("user").child(auth.getUid()).child("Balance").getValue(Double.class);
 
-                        databaseUser.child("user").child(auth.getUid()).child("Balance").setValue(a+artist);
 
-                        Log.e("artist data",artist+"");
+                        databaseUser.child("user").child(auth.getUid()).child("Balance").setValue(addAmount - myCurrentBalance);
+
+
+                        Log.e("artist data",myCurrentBalance+"");
                         Log.e("***************","");
 
                     }
@@ -66,9 +67,6 @@ public class Dialog extends AppCompatDialogFragment {
 
                     }
                 });
-
-
-
             }
         });
         AmountEditText = view.findViewById(R.id.amount);

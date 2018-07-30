@@ -160,7 +160,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
     }
-    Bitmap TextToImageEncode(String Value) throws WriterException {
+   /* Bitmap TextToImageEncode(String Value) throws WriterException {
         BitMatrix bitMatrix;
         try {
             bitMatrix = new MultiFormatWriter().encode(
@@ -192,5 +192,5 @@ public class SignUpActivity extends AppCompatActivity {
 
         bitmap.setPixels(pixels, 0, 500, 0, 0, bitMatrixWidth, bitMatrixHeight);
         return bitmap;
-    }
+    }*/
 }

@@ -23,29 +23,32 @@ public class Dialog extends AppCompatDialogFragment {
 
     Context context;
     private EditText AmountEditText;
-    public Dialog (){
+
+    public Dialog() {
         context = getActivity();
     }
+
     @Override
     public android.app.Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.dialog , null);
+        View view = inflater.inflate(R.layout.dialog, null);
 
 
         builder.setView(view).setTitle("Specify Amount").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
 
-                    }
-                }).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            }
+        }).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-               String amount = AmountEditText.getText().toString();
+                String amount = AmountEditText.getText().toString();
                 auth = FirebaseAuth.getInstance();
                 final Double addAmount = Double.valueOf(amount);
                 final DatabaseReference databaseUser = FirebaseDatabase.getInstance().getReference();
+
 
                 databaseUser.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -53,18 +56,13 @@ public class Dialog extends AppCompatDialogFragment {
 
                         Double myCurrentBalance= dataSnapshot.child("user").child(auth.getUid()).child("Balance").getValue(Double.class);
 
-
                         databaseUser.child("user").child(auth.getUid()).child("Balance").setValue(addAmount - myCurrentBalance);
-
-
                         Log.e("artist data",myCurrentBalance+"");
                         Log.e("***************","");
-
                     }
+
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-
-
                     }
                 });
             }
@@ -80,9 +78,10 @@ public class Dialog extends AppCompatDialogFragment {
 
     }
 
-    public static  Dialog newInstance() {
+    public static Dialog newInstance() {
         Dialog d = new Dialog();
         return d;
     }
+
 
 }

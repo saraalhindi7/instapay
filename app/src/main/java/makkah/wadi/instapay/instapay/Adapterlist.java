@@ -6,13 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.content.Context;
-import java.util.List;
+
+import java.util.ArrayList;
 
 public class Adapterlist extends RecyclerView.Adapter<Adapterlist.ViewHolder> {
 
+
+
     public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView friendname ,friendtran;
+
         public ViewHolder(View itemView) {
             super(itemView);
             friendname = itemView.findViewById(R.id.Friend_Name);
@@ -21,11 +24,11 @@ public class Adapterlist extends RecyclerView.Adapter<Adapterlist.ViewHolder> {
     }
 
     private Context context ;
-    private List<Friendinfo> friendinfo ;
+    private ArrayList<String> friendinfo ;
 
-    public Adapterlist(Context c , List<Friendinfo> friendlist){
+    public Adapterlist(Context c , ArrayList<String> friendinfo){
         this.context=c;
-        this.friendinfo=friendlist;
+        this.friendinfo=friendinfo;
 
     }
 
@@ -40,10 +43,10 @@ public class Adapterlist extends RecyclerView.Adapter<Adapterlist.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        Friendinfo f =friendinfo.get(position);
+        String f =friendinfo.get(position);
 
-        holder.friendname.setText(f.getFriend_name());
-        holder.friendtran.setText(f.getFriend_transaction());
+        holder.friendname.setText(f);
+       // holder.friendtran.setText(f.getFriend_transaction());
 
     }
 

@@ -77,6 +77,7 @@ public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeRe
                 Toast.makeText(getActivity(), "Barcode: " + barcode.displayValue, Toast.LENGTH_SHORT).show();
                 String flag = "friend";
                 if (!isEmpty(barcode.displayValue)) {
+                    String IDfriend = barcode.displayValue;
                     makkah.wadi.instapay.instapay.Dialog dialog = makkah.wadi.instapay.instapay.Dialog.newInstance();
                     dialog.show(getFragmentManager(), "dialog");
                    if (flag.equalsIgnoreCase("friend")) {
@@ -85,7 +86,6 @@ public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeRe
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
                         DatabaseReference myRef = database.getReference().child("user").child(userKey);
                         String ID = barcode.displayValue;
-
                         DatabaseReference friendID = myRef.child("friend").child(ID);
                         friendID.setValue(ID);
                         myRef.child(ID);
@@ -98,12 +98,10 @@ public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeRe
     @Override
     public void onScannedMultiple(List<Barcode> barcodes) {
         Log.e(TAG, "onScannedMultiple: " + barcodes.size());
-
         String codes = "";
         for (Barcode barcode : barcodes) {
             codes += barcode.displayValue + ", ";
         }
-
         final String finalCodes = codes;
         getActivity().runOnUiThread(new Runnable() {
             @Override

@@ -38,7 +38,7 @@ public class ProfileFragment extends Fragment {
    private RecyclerView recyclerView ;
    DatabaseReference databaseUser;
    FirebaseAuth auth;
-    private ArrayList<Friendinfo> friendlist;
+    private ArrayList<String> friendlist;
     private Adapterlist litsadapter;
 
 
@@ -57,9 +57,9 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        auth = FirebaseAuth.getInstance();
 
-        }
+        auth = FirebaseAuth.getInstance();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,7 +73,10 @@ public class ProfileFragment extends Fragment {
         RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
         friendlist = new ArrayList<>();
         for (int i =0 ; i < 10 ; i++){
-            friendlist.add (new Friendinfo("friendname"+i , "friendtransaction"+i , ""));
+            friendlist.add("asmaa");
+            friendlist.add("sara");
+            friendlist.add("esraa");
+
 
         }
         litsadapter = new Adapterlist(getContext() , friendlist);

@@ -35,48 +35,56 @@ import java.util.List;
 
 public class FrindsFragment extends Fragment {
 
-    private RecyclerView recyclerView ;
-    private Adapterlist litsadapter;
-    public ArrayList <Friend> ListOfFriend;
-     ArrayList<String> friendlist;
-    public TextView textViewname , textViewtran ;
-
-    FirebaseAuth auth ;
+    public ArrayList<Friend> ListOfFriend;
+    public TextView textViewname, textViewtran;
+    ArrayList<String> friendlist;
+    FirebaseAuth auth;
     DatabaseReference databaseUser;
+    private RecyclerView recyclerView;
+    private Adapterlist litsadapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-}
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_frinds, container, false);
         friendlist = new ArrayList<String>();
-        auth= FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
         databaseUser = FirebaseDatabase.getInstance().getReference();
+//get friends ids
+        DatabaseReference friendsdata = databaseUser.child("user").child(auth.getUid()).child("friend");
+        friendsdata.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot SingleSnapshot : dataSnapshot.getChildren()) {
+                    String friend = SingleSnapshot.getValue(String.class);
+                    Log.d("Friend id ", friend);
 
-        for (int i =0 ; i < 10 ; i++) {
-            friendlist.add("asmaa");
- friendlist.add("sara");
- friendlist.add("esraa");
 
-        }
 
-        RecyclerView recyclerView = v.findViewById(R.id.RY_friends);
-        litsadapter = new Adapterlist(getContext() ,friendlist);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(litsadapter);
 
-    return v;
+                }
 
-    }}
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
 //        friendlist = new ArrayList<>();
 //        for (int i =0 ; i < 10 ; i++){
 //            friendlist.add (new Friendinfo("friendname"+i , "friendtransaction"+i , ""));
 //
-//       );
 
 
-
+        return v;
+    }
+}

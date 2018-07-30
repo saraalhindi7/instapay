@@ -58,7 +58,7 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
         auth = FirebaseAuth.getInstance();
 
-        mStorageRef = FirebaseStorage.getInstance().getReference();
+//        mStorageRef = FirebaseStorage.getInstance().getReference();
 
         userEmail = (EditText) findViewById(R.id.email_address);
         userPassword = (EditText) findViewById(R.id.Password);

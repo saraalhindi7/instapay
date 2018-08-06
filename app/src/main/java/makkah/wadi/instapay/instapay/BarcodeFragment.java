@@ -42,7 +42,6 @@ public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeRe
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -79,13 +78,18 @@ public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeRe
                 if (!isEmpty(barcode.displayValue)) {
                     String IDfriend = barcode.displayValue;
                     makkah.wadi.instapay.instapay.Dialog dialog = makkah.wadi.instapay.instapay.Dialog.newInstance();
+                    String ID = barcode.displayValue;
+                    Bundle bundle =new Bundle();
+                    bundle.putString("message", ID);
+                    dialog.setArguments(bundle);
+
                     dialog.show(getFragmentManager(), "dialog");
-                   if (flag.equalsIgnoreCase("friend")) {
+
+                    if (flag.equalsIgnoreCase("friend")) {
                         //Asmaa code ---------------------
                         final String userKey = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
                         DatabaseReference myRef = database.getReference().child("user").child(userKey);
-                        String ID = barcode.displayValue;
                         DatabaseReference friendID = myRef.child("friend").child(ID);
                         friendID.setValue(ID);
                         myRef.child(ID);

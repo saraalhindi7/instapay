@@ -37,7 +37,7 @@ public class FrindsFragment extends Fragment {
 
     public ArrayList<Friend> ListOfFriend;
     public TextView textViewname, textViewtran;
-    ArrayList<String> friendlist;
+    ArrayList<String> friendlist, friendname;
     FirebaseAuth auth;
     DatabaseReference databaseUser;
     private RecyclerView recyclerView;
@@ -53,7 +53,9 @@ public class FrindsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_frinds, container, false);
+        final RecyclerView recyclerView = v.findViewById(R.id.RY_friends);
         friendlist = new ArrayList<String>();
+        friendname = new ArrayList<String>();
         auth = FirebaseAuth.getInstance();
         databaseUser = FirebaseDatabase.getInstance().getReference();
 //get friends ids
@@ -63,12 +65,24 @@ public class FrindsFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot SingleSnapshot : dataSnapshot.getChildren()) {
                     String friend = SingleSnapshot.getValue(String.class);
+                    friendlist.add(friend);
                     Log.d("Friend id ", friend);
+                    DatabaseReference friends_name = databaseUser.child("user").child(friend).child("name");
+                     friends_name.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            String temp = dataSnapshot.getValue(String.class);
+                            friendname.add(temp);
+                            litsadapter.notifyDataSetChanged();
+                            Log.d("Friend name ", temp);
+                        }
 
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                        }
 
-
-                }
+                    }); }
 
             }
 
@@ -77,14 +91,29 @@ public class FrindsFragment extends Fragment {
 
             }
         });
-
-
-//        friendlist = new ArrayList<>();
-//        for (int i =0 ; i < 10 ; i++){
-//            friendlist.add (new Friendinfo("friendname"+i , "friendtransaction"+i , ""));
+//       if(friendlist.size()>0){
+//            for(int i =0 ; i<= friendlist.size();i++){
 //
+//                final  DatabaseReference friends_name = databaseUser.child("user").child(friendlist.get(i)).child("name");
+//                String x = friendlist.get(i);
+//                Log.d("Friend id to show  ", x);
+//                friends_name.addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                        String temp = dataSnapshot.getValue(String.class);
+//                        friendname.add(temp);
+//                        Log.d("Friend name ", temp);
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError databaseError) {
+//                    }
+//                })  ;
+//            }}
 
-
+        litsadapter = new Adapterlist(getContext(), friendname);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(litsadapter);
         return v;
     }
 }

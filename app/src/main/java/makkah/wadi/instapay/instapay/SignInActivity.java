@@ -1,6 +1,8 @@
 package makkah.wadi.instapay.instapay;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +18,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
@@ -27,12 +34,12 @@ public class SignInActivity extends AppCompatActivity {
     Button btnSignIn;
     TextView resetPass;
     FirebaseAuth auth;
-
+    DatabaseReference databaseUser ;
     //genera code
     ImageView QR_Profile;
     TextView userNameProfile;
     TextView balancProfile;
-
+    public static final String MY_PREFS_NAME = "MyPrefsFile";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,6 +108,29 @@ public class SignInActivity extends AppCompatActivity {
                                         Toast.makeText(SignInActivity.this, "Authenticaion faild ", Toast.LENGTH_LONG).show();
                                     }
                                 } else {
+// getType
+                                    databaseUser = FirebaseDatabase.getInstance().getReference();
+                                    DatabaseReference userdata = databaseUser.child("user").child(auth.getUid());
+                                    userdata.addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                            User usertype = dataSnapshot.getValue(User.class);
+                                            String type = usertype.getType();
+
+                                            SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE).edit();
+                                            editor.putString("Type", type);
+                                            editor.commit();
+                                            // Log.d("user type",usertype);
+                                        }
+                                        @Override
+                                        public void onCancelled (@NonNull DatabaseError databaseError){
+
+                                        }
+
+                                    });
+
+
                                     //genera code
                                     /*MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
                                     try{
@@ -112,7 +142,6 @@ public class SignInActivity extends AppCompatActivity {
                                     catch (WriterException e){
                                         e.printStackTrace();
                                     }*/
-
                                     Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                                     startActivity(intent);
                                     finish();

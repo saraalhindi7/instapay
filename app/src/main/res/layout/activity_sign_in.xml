@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/maincolor"
+
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -15,6 +16,11 @@
         android:layout_gravity="center_horizontal"
         android:paddingTop="20dp"
         />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="50dp"
+        android:orientation="vertical">
     <EditText
         android:id="@+id/Adress_email"
         android:layout_width="fill_parent"
@@ -49,15 +55,15 @@
         android:layout_marginTop="20dp"
         android:text="Forget Your Password ?"
         android:layout_gravity="center"
-        android:textSize="10sp"
+        android:textSize="16sp"
         android:textColor= "@color/hintcolor"
         />
-
+    </LinearLayout>
     <Button
         android:id="@+id/SignInButton"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="55dp"
+        android:layout_width="170dp"
+        android:layout_height="35dp"
+
         android:layout_gravity="center"
         android:text="Sign In"
         android:textColor="@color/hintcolor"

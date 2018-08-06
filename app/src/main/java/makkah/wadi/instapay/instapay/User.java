@@ -1,9 +1,63 @@
 package makkah.wadi.instapay.instapay;
 
+import java.util.ArrayList;
+
 public class User {
 
     private String id;
     private String name;
+
+    public User(String name, ArrayList<String> friendlist, String type, String phone_number, Double balance) {
+        this.name = name;
+        this.friendlist = friendlist;
+        this.type = type;
+        this.phone_number = phone_number;
+        Balance = balance;
+    }
+
+    public ArrayList<String> getFriendlist() {
+        return friendlist;
+    }
+
+    public void setFriendlist(ArrayList<String> friendlist) {
+        this.friendlist = friendlist;
+    }
+
+    private ArrayList<String> friendlist ;
+    public User( String name, String type, String phone_number, Double balance) {
+
+        this.name = name;
+        this.type = type;
+        this.phone_number = phone_number;
+        Balance = balance;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getPhone_number() {
+        return phone_number;
+    }
+
+    public void setPhone_number(String phone_number) {
+        this.phone_number = phone_number;
+    }
+
+    private String type;
+
 
     public String getId() {
         return id;
@@ -14,15 +68,8 @@ public class User {
     }
 
     private String phone_number;
-    private Double Balance;
+    private double Balance;
 
-    public User( Double Balance , String phone_number , String name) {
-       
-        this.name = name;
-        //this.id = id;
-        this.phone_number = phone_number;
-        this.Balance = Balance;
-    }
 
     public User (){
         //empty
@@ -40,7 +87,7 @@ public class User {
         return phone_number;
     }
 
-    public Double getBalance() {
+    public double getBalance() {
         return Balance;
     }
 
@@ -52,7 +99,7 @@ public class User {
         this.phone_number = phone_number;
     }
 
-    public void setBalance(Double Balance) {
+    public void setBalance(double Balance) {
         this.Balance = Balance;
     }
 }

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -16,6 +17,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.text.DateFormat;
+import java.util.Date;
 
 public class Dialog extends AppCompatDialogFragment {
     FirebaseAuth auth;
@@ -33,6 +37,8 @@ public class Dialog extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog, null);
+        final String strtext=getArguments().getString("message");
+       // final String UserType = getArguments().getString("UserType");
 
 
         builder.setView(view).setTitle("Specify Amount").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -45,20 +51,37 @@ public class Dialog extends AppCompatDialogFragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 String amount = AmountEditText.getText().toString();
-                auth = FirebaseAuth.getInstance();
-                final Double addAmount = Double.valueOf(amount);
+                final Double a = Double.valueOf(amount);
                 final DatabaseReference databaseUser = FirebaseDatabase.getInstance().getReference();
 
 
                 databaseUser.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        String Storname = dataSnapshot.child("user").child(auth.getUid()).child("name").getValue(String.class);
+                        Double userbalance = dataSnapshot.child("user").child(auth.getUid()).child("Balance").getValue(Double.class);
+                  //      if (UserType == "User"){
+                        Double friendbalance = dataSnapshot.child("user").child(strtext).child("Balance").getValue(Double.class);
+                        friendbalance = friendbalance +a;
+                        userbalance=userbalance -a;
+                        databaseUser.child("user").child(auth.getUid()).child("Balance").setValue(userbalance);
+                        databaseUser.child("user").child(strtext).child("Balance").setValue(friendbalance);
 
-                        Double myCurrentBalance= dataSnapshot.child("user").child(auth.getUid()).child("Balance").getValue(Double.class);
 
-                        databaseUser.child("user").child(auth.getUid()).child("Balance").setValue(addAmount - myCurrentBalance);
-                        Log.e("artist data",myCurrentBalance+"");
-                        Log.e("***************","");
+
+
+                        // if (UserType == "Store"){
+             //            String currentDate = DateFormat.getDateTimeInstance().format(new Date());
+               //           String CoponId = databaseUser.child("user").child(strtext).child("copon").push().getKey();
+                 //         DatabaseReference Storerefrence = databaseUser.child("user").child(strtext).child("copon");
+                   //        Storerefrence.child("date").setValue(currentDate);
+                     //      Storerefrence.child("Storename").setValue(Storname);
+
+
+                        //TODO if (type = store) send copon to user child(user).child(barcode.value).child(copons).push().key()
+                        //TODO child(copons).child(key()).child(date)
+                        // TODO child(copons)child(key()).child(amount)
+                        // TODO child(copons)child(key()).child(store)
                     }
 
                     @Override

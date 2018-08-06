@@ -1,7 +1,9 @@
 package makkah.wadi.instapay.instapay;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,6 +15,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,11 +46,15 @@ public class SignUpActivity extends AppCompatActivity {
     String userID;
     Uri filePath;
 
-    public int balance = 50 ;
+    public double balance = 50 ;
     public String name, email, phone, password;
     public EditText userName, userEmail, userPhone, userPassword;
     Button signUpUserBtn;
     TextView haveAccount;
+    RadioGroup radiogroup;
+    String t;
+    public static final String MY_PREFS_NAME = "MyPrefsFile";
+
     private StorageReference mStorageRef;
 
     private FirebaseAuth auth;
@@ -65,11 +73,23 @@ public class SignUpActivity extends AppCompatActivity {
         userName = (EditText) findViewById(R.id.name);
         signUpUserBtn = (Button) findViewById(R.id.SignUpButton);
         userPhone = (EditText) findViewById(R.id.phone_number);
-        haveAccount = (TextView) findViewById(R.id.haveAccountTextView) ;
-        haveAccount.setOnClickListener(new View.OnClickListener() {
+        final Button uploadbutton = (Button) findViewById(R.id.UploudImage);
+
+        radiogroup = (RadioGroup) findViewById(R.id.Radiogroup);
+        radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
             @Override
-            public void onClick(View v) {
-                startActivity( new Intent(SignUpActivity.this, SignInActivity.class));
+            public void onCheckedChanged(RadioGroup group , int checkedId) {
+               // checkedId is the RadioButton selected
+                if (checkedId == R.id.useraccount ){
+                    t = "User";
+                    uploadbutton.setVisibility(View.GONE);
+                }
+                if (checkedId == R.id.radioStore ){
+                    t="Store";
+                    uploadbutton.setVisibility(View.VISIBLE);
+                }
+
             }
         });
 
@@ -81,7 +101,6 @@ public class SignUpActivity extends AppCompatActivity {
                 //trim to remove all spaces
                 email = userEmail.getText().toString();
                 password = userPassword.getText().toString();
-
                 name = userName.getText().toString();
                 phone = userPhone.getText().toString();
 
@@ -120,46 +139,41 @@ public class SignUpActivity extends AppCompatActivity {
                             Log.e("the error", String.valueOf(task.getException()));
                         } else {
                                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("user").child(auth.getUid());
-
+                              // User user = new User(name , t ,phone , balance);
+                              // reference.setValue(user);
                                reference.child("name").setValue(name);
                                reference.child("phone_number").setValue(phone);
                                reference.child("Balance").setValue(balance);
+                               reference.child("type").setValue(t);
 
+                               SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE).edit();
+                               editor.putString("Type", t);
+                               editor.commit();
 
-                              /* StorageReference riversRef = mStorageRef.child("images/images.jpg");
-                               riversRef.putFile(filePath ).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                   @Override
-                                   public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                       Uri downloadUrl = taskSnapshot.getDownloadUrl();
-
-                                   }
-                               }).addOnFailureListener(new OnFailureListener() {
-                                   @Override
-                                   public void onFailure(@NonNull Exception e) {
-
-                                   }
-                               });*/
-                              //need to sort .. not working
-
-                              /* userID = userEmail.getText().toString();
-
-                               try {
-                                   bitmap = TextToImageEncode(userID);
-
-                               } catch (WriterException e) {
-                                   e.printStackTrace();
-                               }*/
 
                                Toast.makeText(SignUpActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), LENGTH_SHORT).show();
                                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-                               startActivity(intent);
+                              // intent.putExtra("UserType", t );
+
+
+                              // intent.putExtra("type",t);
+                                startActivity(intent);
                                finish();
                         }
                     }
                 });
             }
         });
+
+
+
+
+
+
     }
+
+
+
    /* Bitmap TextToImageEncode(String Value) throws WriterException {
         BitMatrix bitMatrix;
         try {
@@ -193,4 +207,5 @@ public class SignUpActivity extends AppCompatActivity {
         bitmap.setPixels(pixels, 0, 500, 0, 0, bitMatrixWidth, bitMatrixHeight);
         return bitmap;
     }*/
+
 }

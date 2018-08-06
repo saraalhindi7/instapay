@@ -5,11 +5,9 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -18,17 +16,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.DateFormat;
-import java.util.Date;
-
-public class Dialog extends AppCompatDialogFragment {
+public class AmountDialog extends AppCompatDialogFragment {
     FirebaseAuth auth;
 
 
     Context context;
     private EditText AmountEditText;
 
-    public Dialog() {
+    public AmountDialog() {
         context = getActivity();
     }
 
@@ -40,6 +35,7 @@ public class Dialog extends AppCompatDialogFragment {
         final String strtext=getArguments().getString("message");
        // final String UserType = getArguments().getString("UserType");
 
+        auth = FirebaseAuth.getInstance();
 
         builder.setView(view).setTitle("Specify Amount").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
@@ -58,7 +54,7 @@ public class Dialog extends AppCompatDialogFragment {
                 databaseUser.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        String Storname = dataSnapshot.child("user").child(auth.getUid()).child("name").getValue(String.class);
+                     //   String Storname = dataSnapshot.child("user").child(auth.getUid()).child("name").getValue(String.class);
                         Double userbalance = dataSnapshot.child("user").child(auth.getUid()).child("Balance").getValue(Double.class);
                   //      if (UserType == "User"){
                         Double friendbalance = dataSnapshot.child("user").child(strtext).child("Balance").getValue(Double.class);
@@ -101,8 +97,8 @@ public class Dialog extends AppCompatDialogFragment {
 
     }
 
-    public static Dialog newInstance() {
-        Dialog d = new Dialog();
+    public static AmountDialog newInstance() {
+        AmountDialog d = new AmountDialog();
         return d;
     }
 

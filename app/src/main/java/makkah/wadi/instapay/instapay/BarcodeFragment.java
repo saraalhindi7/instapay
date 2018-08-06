@@ -1,6 +1,5 @@
 package makkah.wadi.instapay.instapay;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -9,18 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
 
 
 import java.util.List;
@@ -76,14 +69,14 @@ public class BarcodeFragment extends Fragment implements BarcodeReader.BarcodeRe
                 Toast.makeText(getActivity(), "Barcode: " + barcode.displayValue, Toast.LENGTH_SHORT).show();
                 String flag = "friend";
                 if (!isEmpty(barcode.displayValue)) {
-                    String IDfriend = barcode.displayValue;
-                    makkah.wadi.instapay.instapay.Dialog dialog = makkah.wadi.instapay.instapay.Dialog.newInstance();
+                   // String IDfriend = barcode.displayValue;
+                    AmountDialog amountDialog = AmountDialog.newInstance();
                     String ID = barcode.displayValue;
                     Bundle bundle =new Bundle();
                     bundle.putString("message", ID);
-                    dialog.setArguments(bundle);
+                    amountDialog.setArguments(bundle);
 
-                    dialog.show(getFragmentManager(), "dialog");
+                    amountDialog.show(getFragmentManager(), "amountDialog");
 
                     if (flag.equalsIgnoreCase("friend")) {
                         //Asmaa code ---------------------

@@ -74,7 +74,7 @@ public class FrindsFragment extends Fragment {
                             String temp = dataSnapshot.getValue(String.class);
                             friendname.add(temp);
                             litsadapter.notifyDataSetChanged();
-                            Log.d("Friend name ", temp);
+                            Log.d("Friend name ", temp+ "");
                         }
 
                         @Override
@@ -91,25 +91,6 @@ public class FrindsFragment extends Fragment {
 
             }
         });
-//       if(friendlist.size()>0){
-//            for(int i =0 ; i<= friendlist.size();i++){
-//
-//                final  DatabaseReference friends_name = databaseUser.child("user").child(friendlist.get(i)).child("name");
-//                String x = friendlist.get(i);
-//                Log.d("Friend id to show  ", x);
-//                friends_name.addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        String temp = dataSnapshot.getValue(String.class);
-//                        friendname.add(temp);
-//                        Log.d("Friend name ", temp);
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError databaseError) {
-//                    }
-//                })  ;
-//            }}
 
         litsadapter = new Adapterlist(getContext(), friendname);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

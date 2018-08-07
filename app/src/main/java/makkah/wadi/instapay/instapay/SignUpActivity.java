@@ -5,10 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.text.PrecomputedText;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -37,14 +41,16 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 
 
+import java.io.ByteArrayOutputStream;
+
 import static android.widget.Toast.LENGTH_SHORT;
 
 public class SignUpActivity extends AppCompatActivity {
 
     public final static int QRcodeWidth = 500 ;
     Bitmap bitmap ;
-    String userID;
-    Uri filePath;
+    ImageView imageView;
+
 
     public double balance = 50 ;
     public String name, email, phone, password;
@@ -65,6 +71,15 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         auth = FirebaseAuth.getInstance();
+        imageView = (ImageView) findViewById(R.id.codeSignup);
+
+        /*FragmentManager manager = getSupportFragmentManager();
+        final FragmentTransaction transaction = manager.beginTransaction();
+        final ProfileFragment pf = new ProfileFragment();
+        transaction.add(R.id.profileF,pf);
+        transaction.commit();*/
+
+
 
 //        mStorageRef = FirebaseStorage.getInstance().getReference();
 
@@ -152,12 +167,41 @@ public class SignUpActivity extends AppCompatActivity {
 
 
                                Toast.makeText(SignUpActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), LENGTH_SHORT).show();
-                               Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+
                               // intent.putExtra("UserType", t );
 
 
                               // intent.putExtra("type",t);
-                                startActivity(intent);
+                              // final String key = reference.child("user").push().getKey();
+
+                               try {
+                                   bitmap = TextToImageEncode(reference);
+                                   imageView.setImageBitmap(bitmap);
+
+                               } catch (WriterException e) {
+                                   e.printStackTrace();
+                               }
+                               Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                               ByteArrayOutputStream bArray = new ByteArrayOutputStream();
+                               bitmap.compress(Bitmap.CompressFormat.PNG, 50 , bArray);
+                               intent.putExtra("image" , bArray.toByteArray());
+
+
+
+                              /* Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.id.codeSignup);
+                               ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                               bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                               byte[] byteArray = stream.toBy teArray();
+                               */
+                               /*Bundle bundle = new Bundle();
+                               pf.setArguments(bundle);
+                               transaction.add(R.id.profileF,pf);
+                               transaction.commit();
+                               intent.putExtra("BitmapImage", bitmap);*/
+
+
+                              // intent.putExtra("picture", byteArray);
+                               startActivity(intent);
                                finish();
                         }
                     }
@@ -165,20 +209,13 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
     }
 
-
-
-   /* Bitmap TextToImageEncode(String Value) throws WriterException {
+    Bitmap TextToImageEncode(DatabaseReference Value) throws WriterException {
         BitMatrix bitMatrix;
         try {
             bitMatrix = new MultiFormatWriter().encode(
-                    Value,
+                    String.valueOf(Value),
                     BarcodeFormat.DATA_MATRIX.QR_CODE,
                     QRcodeWidth, QRcodeWidth, null
             );
@@ -206,6 +243,5 @@ public class SignUpActivity extends AppCompatActivity {
 
         bitmap.setPixels(pixels, 0, 500, 0, 0, bitMatrixWidth, bitMatrixHeight);
         return bitmap;
-    }*/
-
+    }
 }

@@ -1,11 +1,15 @@
 package makkah.wadi.instapay.instapay;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -33,8 +37,8 @@ import java.util.ArrayList;
 
 public class ProfileFragment extends Fragment {
 
-   TextView Username;
-   TextView balance ;
+   TextView Username,balance ;
+   ImageView userProfile;
    private RecyclerView recyclerView ;
    DatabaseReference databaseUser;
    FirebaseAuth auth;
@@ -59,6 +63,7 @@ public class ProfileFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         auth = FirebaseAuth.getInstance();
+
     }
 
     @Override
@@ -66,9 +71,23 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
 
 
+
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
         Username = (TextView) v.findViewById(R.id.userNameTextView);
         balance = (TextView) v.findViewById(R.id.balaneTextView);
+        userProfile = (ImageView)v.findViewById(R.id.profile_imageView);
+
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        ProfileFragment yourFragment= new ProfileFragment();
+        Bundle b = new Bundle();
+        b= getActivity().getIntent().getExtras();
+        byte[] bytearray = b.getByteArray("image");
+         Bitmap bmp = BitmapFactory.decodeByteArray(bytearray,0,bytearray.length);
+         yourFragment.setArguments(b);
+         fragmentTransaction.add(R.id.profile_imageView , yourFragment , "FRAGMENT");
+         fragmentTransaction.commit();
+        userProfile.setImageBitmap(bmp);
 
         RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
         friendlist = new ArrayList<>();
@@ -76,15 +95,12 @@ public class ProfileFragment extends Fragment {
             friendlist.add("asmaa");
             friendlist.add("sara");
             friendlist.add("esraa");
-
-
         }
+
         litsadapter = new Adapterlist(getContext() , friendlist);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(litsadapter);
         return v;
-
-
     }
     @Override
     public void onStart() {
@@ -102,9 +118,15 @@ public class ProfileFragment extends Fragment {
                 Log.e("id", auth.getUid());
                 Log.e("balance", balance1.toString());
 
+                /*Bundle extras = getActivity().getIntent().getExtras();
+                byte[] byteArray = extras.getByteArray("image");
+                Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);*/
+
                 Username.setText(name);
                 balance.setText(balance1.toString());
-            }
+
+
+          }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 

@@ -10,8 +10,12 @@
     android:layout_height="match_parent"
     android:weightSum="7"
     android:layout_gravity="center"
-    android:padding="30dp"
-    >
+    android:padding="30dp">
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center"
+        android:id="@+id/codeSignup"/>
 
         <EditText
             android:id="@+id/name"

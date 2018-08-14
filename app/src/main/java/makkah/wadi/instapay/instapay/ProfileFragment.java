@@ -37,11 +37,11 @@ import java.util.ArrayList;
 
 public class ProfileFragment extends Fragment {
 
-   TextView Username,balance ;
-   ImageView userProfile;
-   private RecyclerView recyclerView ;
-   DatabaseReference databaseUser;
-   FirebaseAuth auth;
+    TextView Username,balance ;
+    ImageView userProfile;
+    private RecyclerView recyclerView ;
+    DatabaseReference databaseUser;
+    FirebaseAuth auth;
     private ArrayList<String> friendlist;
     private Adapterlist litsadapter;
 
@@ -82,12 +82,12 @@ public class ProfileFragment extends Fragment {
         ProfileFragment yourFragment= new ProfileFragment();
         Bundle b = new Bundle();
         b= getActivity().getIntent().getExtras();
-        byte[] bytearray = b.getByteArray("image");
-         Bitmap bmp = BitmapFactory.decodeByteArray(bytearray,0,bytearray.length);
-         yourFragment.setArguments(b);
-         fragmentTransaction.add(R.id.profile_imageView , yourFragment , "FRAGMENT");
-         fragmentTransaction.commit();
-        userProfile.setImageBitmap(bmp);
+       // byte[] bytearray = b.getByteArray("image");
+     //   Bitmap bmp = BitmapFactory.decodeByteArray(bytearray,0,bytearray.length);
+        yourFragment.setArguments(b);
+        fragmentTransaction.add(R.id.profile_imageView , yourFragment , "FRAGMENT");
+        fragmentTransaction.commit();
+     //   userProfile.setImageBitmap(bmp);
 
         RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
         friendlist = new ArrayList<>();
@@ -113,7 +113,7 @@ public class ProfileFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String name = dataSnapshot.child("user").child(auth.getUid()).child("name").getValue(String.class);
                 Double balance1 = dataSnapshot.child("user").child(auth.getUid()).child("Balance").getValue(Double.class);
-             //
+                //
                 Log.e("name", name);
                 Log.e("id", auth.getUid());
                 Log.e("balance", balance1.toString());
@@ -126,7 +126,7 @@ public class ProfileFragment extends Fragment {
                 balance.setText(balance1.toString());
 
 
-          }
+            }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 

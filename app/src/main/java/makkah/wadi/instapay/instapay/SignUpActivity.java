@@ -160,7 +160,8 @@ public class SignUpActivity extends AppCompatActivity {
                                reference.child("phone_number").setValue(phone);
                                reference.child("Balance").setValue(balance);
                                reference.child("type").setValue(t);
-
+                               Bundle bundle =new Bundle();
+                               bundle.putString("UserType",t);
                                SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE).edit();
                                editor.putString("Type", t);
                                editor.commit();
